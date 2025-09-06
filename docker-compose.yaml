@@ -58,6 +58,8 @@ x-airflow-common: &airflow-common
     AIRFLOW__SMTP__SMTP_USER: ""
     AIRFLOW__SMTP__SMTP_PASSWORD: ""
     AIRFLOW__SMTP__SMTP_MAIL_FROM: "airflow@test.local"
+    AIRFLOW__SMTP__SMTP_STARTTLS: "False"   # 👈 désactive STARTTLS
+    AIRFLOW__SMTP__SMTP_SSL: "False"        # 👈 pas de SSL non plus   
 
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pymongo}
   volumes:
