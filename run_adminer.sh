@@ -1,0 +1,1 @@
+docker run --network github-airflow_default -p 8081:8080 --name adminer adminer
