@@ -1,0 +1,1 @@
+docker exec -it github-airflow_airflow-scheduler_1 bash
