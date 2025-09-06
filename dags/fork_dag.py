@@ -19,7 +19,7 @@ def random_fail_task():
         raise Exception('This task randomly failed half of the time')
 
 with DAG(
-    dag_id='fork1_dag',
+    dag_id='my_fork_dag',
     tags=['tutorial', 'datascientest'],
     schedule_interval=None,
     default_args={

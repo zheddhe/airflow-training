@@ -7,7 +7,7 @@ def print_date():
     print(datetime.datetime.now())
 
 with DAG(
-    dag_id='minutely_dag',
+    dag_id='my_minutely_dag',
     description='My DAG that\'s triggered every minute',
     tags=['tutorial', 'datascientest'],
     # schedule interval peut être une chaine cron unix ou un datetime.timedelta

@@ -7,7 +7,7 @@ def failed_task():
     raise Exception('This task did not work!')
 
 with DAG(
-    dag_id='retries_dag',
+    dag_id='my_retries_dag',
     description='My DAG that will try but fail',
     tags=['tutorial', 'datascientest'],
     schedule_interval=None,

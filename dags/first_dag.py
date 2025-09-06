@@ -4,7 +4,7 @@ from airflow.operators.python import PythonOperator
 import datetime
 
 with DAG(
-    dag_id='my_very_first_dag',
+    dag_id='my_first_dag',
     description='My first DAG created with DataScientest',
     tags=['tutorial', 'datascientest'],
     schedule_interval=None,

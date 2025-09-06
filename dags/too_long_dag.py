@@ -8,7 +8,7 @@ def sleep_20_seconds():
     time.sleep(20)
 
 with DAG(
-    dag_id='too_long_dag',
+    dag_id='my_too_long_dag',
     description='My DAG that\'s triggered every 10 seconds',
     tags=['tutorial', 'datascientest'],
     schedule_interval=datetime.timedelta(seconds=10),

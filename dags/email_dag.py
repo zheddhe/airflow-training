@@ -26,7 +26,7 @@ def notify_failure(context):
 
 
 with DAG(
-    dag_id='email_dag',
+    dag_id='my_email_dag',
     tags=['tutorial', 'datascientest'],
     schedule_interval=None,
     default_args={
