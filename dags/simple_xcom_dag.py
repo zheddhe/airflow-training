@@ -1,16 +1,21 @@
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
+from airflow.models import Variable
 import random
 import logging
 
 logger = logging.getLogger(__name__)
-
+my_variable_value = Variable.get(key="my_variable")
 
 def function_with_return(task_instance):
     task_instance.xcom_push(
         key="my_xcom_value",
-        value=random.uniform(a=0, b=1)
+        value={
+            "hello": "world",
+            "bonjour": "le monde",
+            "my_variable": my_variable_value,
+        }
     )
 
 
