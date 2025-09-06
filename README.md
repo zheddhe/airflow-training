@@ -6,16 +6,19 @@ Practice airflow scheduling in context of datascientest training
 ./install_airflow.sh
 ./smtp_default_airflow.sh
 
-# first start of the docker compose environment
+# create airflow containers
 ./up_airflow.sh
 
-# pause/restart with the following
+# pause/restart airflow containers
 ./stop_airflow.sh
 ./start_airflow.sh
 
-# stop the docker compose environment
+# recreate airflow container -> soft reset
+./reset_airflow.sh
+
+# remove airflow container and network -> reset
 ./down_airflow.sh
 
-# fully clean the docker compose environment
+# remove airflow container / network / volumes (Postgresql volume included) -> hard reset
 ./clean_airflow.sh
 ```
