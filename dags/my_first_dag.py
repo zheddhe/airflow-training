@@ -2,6 +2,7 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
 import datetime
+import time
 
 my_dag = DAG(
     dag_id='my_very_first_dag',
@@ -16,8 +17,12 @@ my_dag = DAG(
 
 # definition of the function to execute
 def print_date_and_hello():
+    raise TypeError('This will not work')
     print(datetime.datetime.now())
     print('Hello from Airflow')
+
+def print_date_and_hello_again():
+    print('Hello from Airflow again')
 
 
 my_task = PythonOperator(
@@ -25,3 +30,12 @@ my_task = PythonOperator(
     python_callable=print_date_and_hello,
     dag=my_dag
 )
+
+my_task2 = PythonOperator(
+    task_id='my_second_task',
+    python_callable=print_date_and_hello_again,
+    dag=my_dag
+)
+
+# sugar syntax pour set_downstream() (ie. my_task2 depend de my_task)
+my_task >> my_task2
