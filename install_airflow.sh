@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 # Setup Airflow DataScientest env
+# # cours
 # wget https://dst-de.s3.eu-west-3.amazonaws.com/airflow_fr/docker-compose/docker-compose.yaml
+# # exam
+# wget https://dst-de.s3.eu-west-3.amazonaws.com/airflow_fr/eval/docker-compose.yaml
 mkdir -p ./dags ./logs ./plugins ./scripts
 sudo chmod -R 777 logs/
 sudo chmod -R 777 dags/
