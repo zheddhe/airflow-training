@@ -53,22 +53,29 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
     AIRFLOW__CORE__LOAD_EXAMPLES: "true"
     AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session"
-    AIRFLOW__SMTP__SMTP_HOST: "mailhog"     # 👈 utilisation mailhog
-    AIRFLOW__SMTP__SMTP_PORT: 1025
-    AIRFLOW__SMTP__SMTP_USER: ""            # 👈 pas de besoin pour mailhog
-    AIRFLOW__SMTP__SMTP_PASSWORD: ""        # 👈 pas de besoin pour mailhog
-    AIRFLOW__SMTP__SMTP_MAIL_FROM: "airflow@test.local" # 👈 n'importe quoi convient pour mailhog
-    AIRFLOW__SMTP__SMTP_STARTTLS: "False"   # 👈 désactive STARTTLS pour utiliser mailhog
-    AIRFLOW__SMTP__SMTP_SSL: "False"        # 👈 pas de SSL non plus
-    # requirement supplementaire "apache-airflow-providers-docker" pour docker socket
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pymongo apache-airflow-providers-docker}
+    AIRFLOW__SMTP__SMTP_HOST: "smtp.gmail.com"
+    AIRFLOW__SMTP__SMTP_PORT: 587
+    AIRFLOW__SMTP__SMTP_USER: "de.airflow@gmail.com"
+    AIRFLOW__SMTP__SMTP_PASSWORD: "cfsrvkongsobheta"
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: "de.airflow@gmail.com"
+
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- scikit-learn}
   volumes:
-    - ./dags:/opt/airflow/dags
-    - ./logs:/opt/airflow/logs
-    - ./plugins:/opt/airflow/plugins
-    - ./scripts:/opt/airflow/scripts
-    - /var/run/docker.sock:/var/run/docker.sock # exercice : volume supplémentaire pour docker socket
-    - ./data:/opt/airflow/data # exercice : volume data
+    - type: bind
+      source: ./dags
+      target: /opt/airflow/dags
+    - type: bind
+      source: ./logs
+      target: /opt/airflow/logs
+    - type: bind
+      source: ./plugins
+      target: /opt/airflow/plugins
+    - type: bind
+      source: ./clean_data
+      target: /app/clean_data
+    - type: bind
+      source: ./raw_files
+      target: /app/raw_files
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
   depends_on:
     redis:
@@ -161,14 +168,17 @@ services:
       timeout: 10s
       retries: 5
     restart: always
-
-  mailhog:
-    image: mailhog/mailhog
-    container_name: mailhog
+  dashboard:
+    image: datascientest/dashapp:1.0.0
+    volumes:
+      - type: bind
+        source: ./clean_data
+        target: /app/clean_data
+      - type: bind
+        source: ./raw_files
+        target: /app/raw_files
     ports:
-      - "1025:1025"   # SMTP
-      - "8025:8025"   # Web UI
-    restart: always
-    
+      - 8050:8050
+
 volumes:
   postgres-db-volume:
